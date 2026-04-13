@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register – ExpenSeLive</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+
+        <div class="auth-logo">
+            <span class="icon">💸</span>
+            <h1>Expen<span>Se</span>Live</h1>
+            <p>Create your free account</p>
+        </div>
+
+        <div class="alert alert-error" th:if="${error}" th:text="${error}"></div>
+
+        <form action="/register" method="post">
+
+            <div class="form-group">
+                <label for="name">Full name</label>
+                <input type="text" id="name" name="name"
+                       placeholder="Jane Doe" required autocomplete="name" />
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email"
+                       placeholder="you@email.com" required autocomplete="email" />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"
+                       placeholder="At least 8 characters" required minlength="8" />
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword"
+                       placeholder="Same password again" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create account →</button>
+
+        </form>
+
+        <div class="auth-footer">
+            Already have an account? <a href="/login">Sign in</a>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const pw  = document.getElementById('password').value;
+      const cpw = document.getElementById('confirmPassword').value;
+      if (pw !== cpw) {
+        e.preventDefault();
+        alert('Passwords do not match. Please try again.');
+      }
+    });
+</script>
+
+</body>
+</html>

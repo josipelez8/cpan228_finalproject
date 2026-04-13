@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login – ExpenSeLive</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+
+        <div class="auth-logo">
+            <span class="icon">💸</span>
+            <h1>Expen<span>Se</span>Live</h1>
+            <p>Track every dollar. Stay in control.</p>
+        </div>
+
+        <div class="alert alert-error" th:if="${param.error}">
+            Incorrect email or password. Please try again.
+        </div>
+
+        <div class="alert alert-success" th:if="${param.registered}">
+            Account created! You can now log in.
+        </div>
+
+        <div class="alert alert-success" th:if="${param.logout}">
+            You have been logged out successfully.
+        </div>
+
+        <form action="/login" method="post">
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="username"
+                       placeholder="you@email.com" required autocomplete="email" />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"
+                       placeholder="••••••••" required autocomplete="current-password" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Sign in →</button>
+
+        </form>
+
+        <div class="auth-footer">
+            Don't have an account? <a href="/register">Create one free</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
