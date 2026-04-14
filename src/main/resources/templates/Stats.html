@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<div class="main">
+
+    <h1>Admin Statistics</h1>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <div>Total Users</div>
+            <div class="value" th:text="${totalUsers}">0</div>
+        </div>
+
+        <div class="stat-card">
+            <div>Total Expenses</div>
+            <div class="value" th:text="${totalExpenses}">0</div>
+        </div>
+
+        <div class="stat-card">
+            <div>Total Spent</div>
+            <div class="value"
+                 th:text="'$' + ${#numbers.formatDecimal(totalSpent, 1, 2)}">
+                $0.00
+            </div>
+        </div>
+
+    </div>
+
+    <h2>Spending by Category</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Category</th>
+            <th>Total Spent</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="row : ${byCategory}">
+            <td th:text="${row[0]}">food</td>
+            <td th:text="'$' + ${#numbers.formatDecimal(row[1], 1, 2)}">$0</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

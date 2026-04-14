@@ -9,131 +9,180 @@
 <body>
 
 <nav class="navbar">
-    <div class="nav-brand">💸 Expen<span>Se</span>Live</div>
+    <div class="nav-brand">Expen<span>Se</span>Live</div>
     <div class="nav-links">
         <span style="color: var(--muted); font-size: 0.9rem;">
-        Hi, <span th:text="${#authentication.name}">User</span>
-            <form action="/logout" method="post" style="display:inline;">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="submit" class="btn-nav">Logout</button>
-            </form>
+            Hi, <span th:text="${#authentication.name}">User</span></span>
     </div>
+
+    <form action="/logout" method="post" style="display:inline;">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit" class="btn-nav">Logout</button>
+    </form>
 </nav>
 
 <main class="main">
 
-    <div class="greeting">
-        <h2>Your <span>expense</span> dashboard</h2>
-        <p>Here's a summary of your spending this month.</p>
-    </div>
+    <div class="layout">
 
-    <div class="stats-grid">
+        <!-- LEFT: DASHBOARD -->
+        <div class="panel left-panel">
 
-        <div class="stat-card">
-            <div class="label">💰 Total Income</div>
-            <div class="value income"
-                 th:text="'$' + ${#numbers.formatDecimal(income, 1, 2)}">$0.00</div>
-        </div>
+            <div class="greeting">
+                <h2>Your <span>expense</span> dashboard</h2>
+                <p>Here's where your cash is flowing:</p>
+            </div>
 
-        <div class="stat-card">
-            <div class="label">💸 Total Expenses</div>
-            <div class="value expense"
-                 th:text="'$' + ${#numbers.formatDecimal(totalExpenses, 1, 2)}">$0.00</div>
-        </div>
+            <div class="stats-grid">
 
-        <div class="stat-card">
-            <div class="label">🏦 Balance</div>
-            <div class="value balance"
-                 th:text="'$' + ${#numbers.formatDecimal(balance, 1, 2)}">$0.00</div>
-        </div>
-
-    </div>
-
-
-    <div class="add-form">
-        <h3>➕ Add a new expense</h3>
-
-        <form action="/expenses/add" method="post">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-            <div class="form-row">
-
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input type="text" id="description" name="description"
-                           placeholder="e.g. Grocery shopping" required />
-                </div>
-
-                <div class="form-group">
-                    <label for="amount">Amount ($)</label>
-                    <input type="number" id="amount" name="amount"
-                           placeholder="0.00" min="0.01" step="0.01" required />
-                </div>
-
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <select id="category" name="category" style="
-              width:100%; padding:12px 16px; background:var(--dark);
-              border:1px solid var(--border); border-radius:8px;
-              color:var(--text); font-family:'Sora',sans-serif;
-              font-size:0.95rem; outline:none;">
-                        <option value="food">🍔 Food</option>
-                        <option value="transport">🚗 Transport</option>
-                        <option value="bills">💡 Bills</option>
-                        <option value="other">📦 Other</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label style="visibility:hidden;">Add</label>
-                    <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                <div class="stat-card">
+                    <div class="label">Total Expenses:</div>
+                    <div class="value expense"
+                         th:text="'$' + ${#numbers.formatDecimal(totalExpenses, 1, 2)}">$0.00</div>
                 </div>
 
             </div>
-        </form>
-    </div>
 
-    <div class="section-header">
-        <h3>📜 Recent Expenses</h3>
-    </div>
+        </div>
 
-    <div class="table-wrapper">
-        <table>
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Amount</th>
-            </tr>
-            </thead>
-            <tbody>
 
-            <tr th:if="${expenses.isEmpty()}">
-                <td colspan="4" style="text-align:center; color:var(--muted); padding:48px 20px;">
-                    No expenses yet. Add your first one above! 👆
-                </td>
-            </tr>
-            <tr th:each="expense : ${expenses}">
-                <td style="color:var(--muted);" th:text="${expense.date}">Apr 1</td>
-                <td th:text="${expense.description}">Description</td>
-                <td>
-                    <span class="badge"
-                          th:classappend="${expense.category == 'food'      ? 'badge-food'      :
-                                     expense.category == 'transport'  ? 'badge-transport' :
-                                     expense.category == 'bills'      ? 'badge-bills'     :
-                                                                        'badge-other'}"
-                          th:text="${expense.category}">
-              </span>
-                </td>
-                <td class="amount-neg"
-                    th:text="'-$' + ${#numbers.formatDecimal(expense.amount, 1, 2)}">
-                    -$0.00
-                </td>
-            </tr>
+        <!-- CENTER: ADD NEW -->
+        <div class="panel center-panel">
 
-            </tbody>
-        </table>
+            <div class="add-form">
+                <h3>+ Add a new expense</h3>
+
+                <form action="/expenses/add" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="date" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" id="description" name="description"
+                                   placeholder="Hamburger" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="amount">Amount ($)</label>
+                            <input type="number" id="amount" name="amount"
+                                   placeholder="0.00" min="0.01" step="0.01" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category">
+                                <option value="food">Food</option>
+                                <option value="transport">Transport</option>
+                                <option value="bills">Bills</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="visibility:hidden;">Add</label>
+                            <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT: EXPENSES LIST -->
+        <div class="panel right-panel">
+
+            <div class="section-header">
+                <h3>Expenses</h3>
+            </div>
+
+            <div style="margin: 20px 0;">
+                <form method="get" action="/" style="display:flex; gap:10px;">
+
+                    <!--
+                    <input type="text"
+                           name="keyword"
+                           placeholder="Search description..."
+                           th:value="${keyword}" />
+                        -->
+
+                    <select name="category">
+                        <option value="">All categories</option>
+                        <option value="food">Food</option>
+                        <option value="transport">Transport</option>
+                        <option value="bills">Bills</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <input type="date" name="date" th:value="${date}" />
+
+                    <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                    <a href="/" class="btn btn-secondary btn-sm">Clear</a>
+
+                </form>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:if="${expenses.isEmpty()}">
+                        <td colspan="4" style="text-align:center; color:var(--muted); padding:48px 20px;">
+                            No expenses found... :(
+                        </td>
+                    </tr>
+
+                    <tr th:each="expense : ${expenses}">
+                        <td th:text="${expense.date}">Apr 1</td>
+                        <td th:text="${expense.description}">Description</td>
+                        <td>
+                            <span class="badge"
+                                  th:classappend="${expense.category == 'food' ? 'badge-food' :
+                                                   expense.category == 'transport' ? 'badge-transport' :
+                                                   expense.category == 'bills' ? 'badge-bills' :
+                                                   'badge-other'}"
+                                  th:text="${expense.category}">
+                            </span>
+                        </td>
+                        <td class="amount-neg"
+                            th:text="'-$' + ${#numbers.formatDecimal(expense.amount, 1, 2)}">
+                            -$0.00
+                        </td>
+
+                        <td>
+                            <form th:action="@{'/expenses/delete/' + ${expense.id}}" method="post" style="display:inline;">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                                <button type="submit" class="btn-delete"
+                                        onclick="return confirm('Delete this expense?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
     </div>
 
 </main>

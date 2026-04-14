@@ -1,6 +1,8 @@
 package com.cpan228.expenselive.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -14,6 +16,8 @@ public class Expense {
     private String description;
     private double amount;
     private String category;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date = LocalDate.now();
 
     @ManyToOne

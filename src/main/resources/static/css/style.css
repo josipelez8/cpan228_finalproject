@@ -1,12 +1,15 @@
 
 :root {
-  --bg: #0f172a;
-  --card: #1e293b;
-  --primary: #6366f1;
-  --accent: #22c55e;
-  --text: #e2e8f0;
-  --muted: #94a3b8;
-  --border: #334155;
+  --bg: #88e788;              /* main soft green background */
+
+  --card: #eaffea;           /* light mint card background */
+  --primary: #2f855a;        /* deep natural green for buttons/links */
+  --accent: #22c55e;         /* vibrant green highlight */
+
+  --text: #0f2e1a;           /* dark green-black for readability */
+  --muted: #3f6b4f;          /* softer green-gray text */
+
+  --border: #b7e4c7;         /* light green border */
 }
 
 
@@ -28,9 +31,7 @@ body {
 .auth-card {
   background: var(--card);
   padding: 40px;
-  border-radius: 12px;
   width: 350px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
 .auth-logo {
@@ -42,25 +43,31 @@ body {
   color: var(--primary);
 }
 
-.form-group {
-  margin-bottom: 15px;
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-right: 32px;
 }
 
-input {
+.form-group:last-child {
+    display: flex;
+    align-items: end;
+}
+
+input,
+select {
   width: 100%;
   padding: 10px;
-  border-radius: 6px;
   border: 1px solid var(--border);
-  background: #0f172a;
-  color: white;
+  background: #f0fff4;
+  color: var(--text);
 }
-
 button {
   width: 100%;
   padding: 12px;
   background: var(--primary);
   border: none;
-  border-radius: 6px;
   color: white;
   cursor: pointer;
 }
@@ -83,7 +90,7 @@ button:hover {
 
 
 .main {
-  padding: 30px;
+  padding: 4px;
 }
 
 .stats-grid {
@@ -117,4 +124,31 @@ th, td {
 th {
   text-align: left;
   color: var(--muted);
+}
+
+.layout {
+    display: flex;
+    gap: 4px;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+/* Each column */
+.panel {
+    flex: 1;
+    background: var(--card, #1e1e1e);
+    padding: 10px;
+    min-height: 600px;
+}
+
+/* Make center slightly wider */
+.center-panel {
+    flex: 1.2;
+}
+
+/* Responsive: stack on mobile */
+@media (max-width: 1000px) {
+    .layout {
+        flex-direction: column;
+    }
 }
