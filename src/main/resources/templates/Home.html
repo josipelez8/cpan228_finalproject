@@ -12,8 +12,11 @@
     <div class="nav-brand">💸 Expen<span>Se</span>Live</div>
     <div class="nav-links">
         <span style="color: var(--muted); font-size: 0.9rem;">
-        Hi, <span th:text="${user != null ? user.name : 'Guest'}">User</span>
-        <a href="/logout" class="btn-nav">Logout</a>
+        Hi, <span th:text="${#authentication.name}">User</span>
+            <form action="/logout" method="post" style="display:inline;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="btn-nav">Logout</button>
+            </form>
     </div>
 </nav>
 
@@ -51,6 +54,7 @@
         <h3>➕ Add a new expense</h3>
 
         <form action="/expenses/add" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
             <div class="form-row">
 
